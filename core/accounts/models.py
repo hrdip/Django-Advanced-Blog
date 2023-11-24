@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email,password,**extra_fields)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser,PermissionsMixin):
     ''' 
     custom User Model for our app
     '''
@@ -76,8 +76,8 @@ class Profile (models.Model):
         return self.user.email
 
 
-@receiver(post_save, sender=User)
-def save_profile(sender, instance, created, **kwargs):
+@receiver(post_save,sender=User)
+def save_profile(sender,instance,created,**kwargs):
     if created:
-        Profile.objects.create(User=instance)
+        Profile.objects.create(user=instance)
         
