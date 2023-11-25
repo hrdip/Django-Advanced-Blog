@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 # Create your views here.
  
 # Function Base View show a template
@@ -42,12 +43,13 @@ class RedirectToHiva(RedirectView):
 
 
 # Custom Class Base View for ListView
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     # model = Post
     queryset = Post.objects.all()
     context_object_name = 'posts'
     paginate_by = 2
     ordering = '-id'
+    permission_required = "blog.view_post"
 
     ''' 
     insted of model and queryset we can customize with
@@ -59,7 +61,7 @@ class PostListView(ListView):
 
 
 # Custom Class Base View for DetailView
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
 
 
@@ -76,7 +78,7 @@ class PostCreateView(FormView):
     '''
 
 # Custom Class Base View for CreateView
-class PostCreateView(CreateView): 
+class PostCreateView(LoginRequiredMixin,CreateView): 
     model = Post
     #fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
@@ -88,7 +90,7 @@ class PostCreateView(CreateView):
     
 
 # Custom Class Base View for UpdateView
-class PostEditView(UpdateView): 
+class PostEditView(LoginRequiredMixin,UpdateView): 
     model = Post
     #fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
@@ -97,6 +99,6 @@ class PostEditView(UpdateView):
 
 
 # Custom Class Base View for DeleteView
-class PostDeleteView(DeleteView): 
+class PostDeleteView(LoginRequiredMixin,DeleteView): 
     model = Post
     success_url = '/blog/post/'
