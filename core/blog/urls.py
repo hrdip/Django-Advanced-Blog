@@ -15,5 +15,7 @@ urlpatterns = [
     path('/go-to-index', RedirectView.as_view(pattern_name ="blog:cbv-index"), name="redirect-to-index"),
     #path('/go-to-hiva', redirectToHiva, name="redirect-to-hiva"),
     path('/go-to-hiva', views.RedirectToHiva.as_view(), name="redirect-to-hiva"),
-    path('/post/', views.PostList.as_view(), name='post-list'),
+    path('/post/', views.PostListView.as_view(), name='post-list'),
+    path('/post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
+    path ('/post/create/', views.PostCreateView.as_view(), name='post-create'),
 ]
