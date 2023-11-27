@@ -211,6 +211,8 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 
 # 3) Class Base View (ViewSet)
+# Example for ViewSet in CBV
+'''
 class PostViewSet(viewsets.ViewSet):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -237,3 +239,14 @@ class PostViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         pass
+    '''
+
+
+# 4) Class Base View (ModelViewSet)
+# Example for ModelViewSet in CBV
+# The Best One
+class PostModelViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
