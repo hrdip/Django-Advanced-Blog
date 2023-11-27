@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import PostSerializer
-from ... models import Post
+from .serializers import PostSerializer, CategorySerializer
+from ... models import Post, Category
 from django.shortcuts import get_object_or_404
 from rest_framework import status, mixins, viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -250,3 +250,9 @@ class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
+
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
