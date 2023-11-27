@@ -6,7 +6,11 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework import mixins
 
+
+# Example for Function Based View
 '''
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
@@ -22,7 +26,7 @@ def postList(request):
         return Response(serializer.data)
    '''     
 
-
+'''
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def postDetail(request,id):
@@ -38,9 +42,11 @@ def postDetail(request,id):
     elif request.method == 'DELETE':
         post.delete()
         return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
-    
+    '''    
 
 
+# Example For Class Base view for APIView
+'''
 class PostList(APIView):
     """getting a list of posts and creating new posts"""
 
@@ -50,12 +56,92 @@ class PostList(APIView):
     def get(self, request):
         """retriving a list of posts"""
         posts = Post.objects.filter(status=True)
-        serializer = PostSerializer(posts,many=True)
+        # serializer = PostSerializer(posts,many=True)
+        serializer = self.serializer_class(posts,many=True)
         return Response(serializer.data)
     
     def post(self, request):
         """creating a new post with provided data"""
-        serializer = PostSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+   ''' 
+
+
+class PostDetail(APIView):
+    """ gettinf detail of the post and edit plus removing it"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+
+    def get(self, request, id):
+        """retriveing the post data"""
+        post = get_object_or_404(Post,pk=id,status=True)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)
+    
+    def put(self, request, id):
+        """editing the post data """
+        post = get_object_or_404(Post,pk=id,status=True)
+        serializer = self.serializer_class(post,data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def delete(self, request, id):
+        """deleting the post object""" 
+        post = get_object_or_404(Post,pk=id,status=True)
+        post.delete()
+        return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
+    
+
+# Example (1) For Class Base view for GenerciView only
+'''
+class PostList(GenericAPIView):
+    """getting a list of posts and creating new posts"""
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
+
+    def get(self, request):
+        """retriving a list of posts"""
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset,many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        """creating a new post with provided data"""
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    '''
+
+# Example (2) For Class Base view for GenerciView with ListModelMixin and CreateModelMixin
+'''
+class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+    """getting a list of posts and creating new posts"""
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
+
+    def get(self, request, *args, **kwargs):
+        """retriving a list of posts"""
+        return self.list(request, *args, **kwargs)
+    
+
+    def post(self, request, *args, **kwargs):
+        """creating a new post with provided data"""
+        return self.create(request, *args, **kwargs)
+    '''    
+
+
+# Example (3) For Class Base view for ListCreateAPIView
+class PostList(ListCreateAPIView):
+    """getting a list of posts and creating new posts"""
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
