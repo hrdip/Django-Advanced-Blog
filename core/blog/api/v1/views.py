@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import mixins
 
 
@@ -68,7 +68,7 @@ class PostList(APIView):
         return Response(serializer.data)
    ''' 
 
-
+'''
 class PostDetail(APIView):
     """ gettinf detail of the post and edit plus removing it"""
     permission_classes = [IsAuthenticated]
@@ -93,9 +93,10 @@ class PostDetail(APIView):
         post = get_object_or_404(Post,pk=id,status=True)
         post.delete()
         return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
-    
+    '''
 
-# Example (1) For Class Base view for GenerciView only
+
+# Example-PostList (1) For Class Base view for GenerciView only
 '''
 class PostList(GenericAPIView):
     """getting a list of posts and creating new posts"""
@@ -118,7 +119,7 @@ class PostList(GenericAPIView):
         return Response(serializer.data)
     '''
 
-# Example (2) For Class Base view for GenerciView with ListModelMixin and CreateModelMixin
+# Example-PostList (2) For Class Base view for GenerciView with ListModelMixin and CreateModelMixin
 '''
 class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     """getting a list of posts and creating new posts"""
@@ -138,10 +139,73 @@ class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     '''    
 
 
-# Example (3) For Class Base view for ListCreateAPIView
+# Example-PostList (3) For Class Base view for ListCreateAPIView
+# Best one
 class PostList(ListCreateAPIView):
     """getting a list of posts and creating new posts"""
 
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
+
+
+# Example-PostDetail (1) For Class Base view for GenerciView only
+'''
+class PostDetail(GenericAPIView):
+    """ gettinf detail of the post and edit plus removing it"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+
+    def get(self, request, id):
+        """retriveing the post data"""
+        post = get_object_or_404(Post,pk=id,status=True)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)
+    
+    def put(self, request, id):
+        """editing the post data """
+        post = get_object_or_404(Post,pk=id,status=True)
+        serializer = self.serializer_class(post,data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def delete(self, request, id):
+        """deleting the post object""" 
+        post = get_object_or_404(Post,pk=id,status=True)
+        post.delete()
+        return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT ) 
+    '''
+
+
+# Example-PostDetail (2) For Class Base view for GenerciView with RetrieveModelMixin, UpdateModelMixin and DestroyModelMixin
+'''
+class PostDetail(GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    """ gettinf detail of the post and edit plus removing it"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
+    lookup_field = 'id'
+
+    def get(self, request, *args, **kwargs):
+        """retriveing the post data"""
+        return self.retrieve(request, *args, **kwargs)
+ 
+    def put(self, request, *args, **kwargs):
+        """editing the post data """
+        return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        """deleting the post object""" 
+        return self.destroy(request, *args, **kwargs) 
+    ''' 
+
+# Example-PostDetail (3) For Class Base view for RetrieveUpdateDestroyAPIView
+# Best one
+class PostDetail(RetrieveUpdateDestroyAPIView):
+    """ gettinf detail of the post and edit plus removing it"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    queryset = Post.objects.filter(status=True)
+    lookup_field = 'id'
+    
