@@ -22,15 +22,15 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name')
         model = Profile
 
-# model doe ModelSerializer
+# model for ModelSerializer
 class PostSerializer(serializers.ModelSerializer):
     #content = serializers.ReadOnlyField()
-    #content =serializers.CharField(read_only=True)
+    #content = serializers.CharField(read_only=True)
     snippet = serializers.ReadOnlyField(source='get_snippet')
     relative_url = serializers.URLField(source='get_absolute_api_url', read_only=True)
     absolute_url = serializers.SerializerMethodField()
-    #category = serializers.SLugRelatedField(many=False, slug_field='name', queryset=Category.objects.all()) --> just show name
-    #category = CategorySerializer()--> cant chose category by id
+    #category = serializers.SLugRelatedField(many=False, slug_field='name', queryset=Category.objects.all()) --> only category names are shown
+    #category = CategorySerializer()--> problem: only the category ID is taken and not the category name
     
     class Meta:
         model = Post
@@ -41,7 +41,7 @@ class PostSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         return request.build_absolute_uri()
     
-    # Fix problems of Category (show id and name, and for create just get id but show name)
+    # the category id and category name are shown but for post creations only category name is taken
     '''
     def to_representation(self, instance): 
         rep = super().to_representation(instance)
@@ -49,7 +49,8 @@ class PostSerializer(serializers.ModelSerializer):
         return rep
     '''
 
-    # Fix problems of Category and separated  PostList fields and DetailList fields by checking id with keyname= kwargs
+    # all categories problem are fixed
+    # by checking the ID though the key=kwargs, it distinguishes between PostList and PostDetail
     def to_representation(self, instance): 
         request = self.context.get('request')
         rep = super().to_representation(instance)
@@ -63,7 +64,7 @@ class PostSerializer(serializers.ModelSerializer):
         rep['author'] = AuthorSerializer(instance.author).data
         return rep 
     
-    # select automatically author for user login
+    # the author is selected automatically based on user
     def create(self, validated_data):
         validated_data['author'] = Profile.objects.get(user__id = self.context.get('request').user.id)
         return super().create(validated_data)

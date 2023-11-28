@@ -14,7 +14,6 @@ from .paginations import DefaultPagination, CustomPagination
 
 
 # 1) Function Base View
-# Example for Function Based View
 '''
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
@@ -47,8 +46,7 @@ def postDetail(request,id):
         post.delete()
         return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
     '''    
-# 2) Class Base View (APIView)
-# Example For Class Base view for APIView
+# 2) Class Base View by APIView
 '''
 class PostList(APIView):
     """getting a list of posts and creating new posts"""
@@ -98,7 +96,7 @@ class PostDetail(APIView):
         return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
     '''
 
-# 3) Class Base View (GenericView)
+# 3) Class Base View by GenericView
 # Example (1) For Class Base view for GenerciView only
 '''
 class PostList(GenericAPIView):

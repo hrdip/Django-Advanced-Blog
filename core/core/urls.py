@@ -43,7 +43,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('', include('website.urls')),
     path('blog', include('blog.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('accounts.urls')),
     path('api-docs/', include_docs_urls(title='API Documentation')),
     # drf-yasg urls,
     path('swagger/output.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
