@@ -7,7 +7,7 @@ from rest_framework import status, mixins, viewsets
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
+from .permissions import IsOwnerOrReadOnly
 
 # 1) Function Base View
 # Example for Function Based View
@@ -247,7 +247,7 @@ class PostViewSet(viewsets.ViewSet):
 # The Best One
 class PostModelViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
 
