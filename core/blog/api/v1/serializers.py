@@ -17,6 +17,11 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name']
 
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('id', 'first_name')
+        model = Profile
+
 # model doe ModelSerializer
 class PostSerializer(serializers.ModelSerializer):
     #content = serializers.ReadOnlyField()
@@ -54,7 +59,8 @@ class PostSerializer(serializers.ModelSerializer):
             rep.pop('absolute_url', None)
         else: 
             rep.pop('content', None)
-        rep['category'] = CategorySerializer(instance.category, context={'request'=request}).data
+        rep['category'] = CategorySerializer(instance.category, context={'request':request}).data
+        rep['author'] = AuthorSerializer(instance.author).data
         return rep 
     
     # select automatically author for user login
