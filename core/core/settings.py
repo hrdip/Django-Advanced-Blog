@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'blog',
     'website',
+    'django_filters',
     
 
 ] 
