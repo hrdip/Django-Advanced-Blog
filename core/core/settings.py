@@ -30,7 +30,6 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.spl
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +39,8 @@ INSTALLED_APPS = [
     'accounts',
     'blog',
     'website',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
 
@@ -139,9 +140,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # user manager configuration
 AUTH_USER_MODEL = 'accounts.User'
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK = ({
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ]
-    'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema'
-}
+    #'DEFAULT_SCHEMA_CLASS':'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_AUITHENTICATION_CLASSES':[
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+        ]
+})
