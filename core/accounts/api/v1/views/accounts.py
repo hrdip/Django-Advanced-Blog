@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
-
-
+from mail_templated import EmailMessage
+from ...utils import EmailThread
 
 User = get_user_model()
 
@@ -74,4 +74,11 @@ class ChangePasswordApiView(generics.GenericAPIView):
             self.object.save()
             return Response({'detail':'Password Changed Successfully'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
-    
+
+
+class TestEmailSend(generics.GenericAPIView):
+
+    def get(self, request, *args, **kwargs):
+        email_obj = EmailMessage('email/hello.tpl',{'name':'hossein'}, 'admin@admin.com',to=['hrdip.2018@gmail.com'] )
+        EmailThread(email_obj).start()
+        return Response('Email send') 

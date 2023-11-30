@@ -12,6 +12,12 @@ urlpatterns = [
     # Registration
     path('registration/', views.RegistrationApiView.as_view(), name='registeation'),
     
+    # Test send email to Terminal
+    path('test-email/', views.TestEmailSend.as_view(), name='test-email'),
+    # Activation
+    
+    # Resend Activation
+
     # Login
     # general auth just redirect token
     # path('token/login', ObtainAuthToken.as_view(), name='token-login'),
