@@ -1,12 +1,9 @@
 from rest_framework import serializers
-from ...models import User
+from ....models import User
 from django.contrib.auth.password_validation import validate_password
-from django.core import exceptions
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _ 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
-
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -89,5 +86,4 @@ class ChangePasswordSerializer(serializers.Serializer):
         except serializers.ValidationError as err:
             raise serializers.ValidationError({'new_password':list(err.messages)})
         return super().validate(attrs)
-    
     
