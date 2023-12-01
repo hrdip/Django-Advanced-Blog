@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from ..serializers.accounts import (RegistrationSerializer, CustomAuthTokenSerializer, 
-                          CustomTokenObtainPairSerializer, ChangePasswordSerializer)
+                          CustomTokenObtainPairSerializer, ChangePasswordSerializer,
+                          ActivationResendSerializer)
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -120,3 +121,20 @@ class ActivationApiView(APIView):
         user_obj.is_verified = True
         user_obj.save()
         return Response({"detail":"your account have been verified and activated successfully"})
+
+
+class ActivationResendApiView(generics.GenericAPIView):
+    serializer_class = ActivationResendSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = ActivationResendSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user_obj = serializer.validated_data['user']
+        token = self.get_tokens_for_user(user_obj)
+        email_obj = EmailMessage('email/activation_email.tpl', {'token':token}, 'admin@admin.com', to=[user_obj.email])
+        EmailThread(email_obj).start()
+        return Response({"details":"User activation resend successfully"}, status=status.HTTP_200_OK)
+
+    def get_tokens_for_user(self,user):
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
