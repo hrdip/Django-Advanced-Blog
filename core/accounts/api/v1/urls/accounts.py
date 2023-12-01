@@ -37,4 +37,8 @@ urlpatterns = [
     # Change password
     path('change-password/', views.ChangePasswordApiView.as_view(), name='change-password'),
 
+    # Reset password
+    path('password-reset/request/',views.RequestPasswordReset.as_view(), name='request-password-reset'),
+    path('password-reset/<str:uidb64>/<str:token>/',views.PasswordTokenCheckAPIView.as_view(),name='password-reset'),
+    path('password-reset/complete/',views.SetNewPasswordAPIView.as_view(),name='password-reset-complete')
  ] 

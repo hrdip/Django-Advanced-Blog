@@ -105,3 +105,25 @@ class ActivationResendSerializer(serializers.Serializer):
             raise serializers.ValidationError({"details":"user is already activated and verified"})
         attrs['user'] = user_obj
         return super().validate(attrs) 
+    
+class ResetPasswordViaEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        user_obj = User.objects.get(email=email)
+        return super().validate(attrs)
+
+
+class ResetPassWordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get('new_password') != attrs.get('new_password1'):
+            raise serializers.ValidationError({'detail':'password dose not match'})
+        try:
+            validate_password(attrs.get('new_password'))
+        except serializers.ValidationError as err:
+            raise serializers.ValidationError({'new_password':list(err.messages)})
+        return super().validate(attrs)
