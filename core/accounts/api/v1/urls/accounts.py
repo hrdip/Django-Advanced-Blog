@@ -14,8 +14,10 @@ urlpatterns = [
     
     # Test send email to Terminal
     path('test-email/', views.TestEmailSend.as_view(), name='test-email'),
-    # Activation
     
+    # Activation
+    path('activation/confirm/<str:token>', views.ActivationApiView.as_view(), name='activation'),
+
     # Resend Activation
 
     # Login
