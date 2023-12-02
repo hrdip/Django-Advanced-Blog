@@ -7,7 +7,8 @@ djangorestframework
 # third party modules
 markdown
 django-filter
-drf-yasg[validation] == 1.21.6
+drf-yasg[validation]
+djangorestframework-simplejwt
 
 # deployment modules
 
@@ -23,5 +24,4 @@ pytest-django
 # Documentations
 # coreapi
 
-#jwt
-# djangorestframework-simplejwt
+

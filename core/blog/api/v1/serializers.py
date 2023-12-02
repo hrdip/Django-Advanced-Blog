@@ -28,9 +28,7 @@ class PostSerializer(serializers.ModelSerializer):
     # content = serializers.ReadOnlyField()
     # content = serializers.CharField(read_only=True)
     snippet = serializers.ReadOnlyField(source="get_snippet")
-    relative_url = serializers.URLField(
-        source="get_absolute_api_url", read_only=True
-    )
+    relative_url = serializers.URLField(source="get_absolute_api_url", read_only=True)
     absolute_url = serializers.SerializerMethodField()
     # category = serializers.SLugRelatedField(many=False, slug_field='name', queryset=Category.objects.all()) --> only category names are shown
     # category = CategorySerializer()--> problem: only the category ID is taken and not the category name
