@@ -7,7 +7,7 @@ djangorestframework
 # third party modules
 markdown
 django-filter
-drf-yasg
+drf-yasg[validation] == 1.21.6
 
 # deployment modules
 
