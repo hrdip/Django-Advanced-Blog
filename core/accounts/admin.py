@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User,Profile
-#from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-#from django import forms
+from .models import User, Profile
+
+# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+# from django import forms
 # Register your models here.
 
 # class CustomUserCreationsForm(UserCreationForm):
@@ -17,54 +18,69 @@ from .models import User,Profile
 #     '''
 #       for change our custom form
 #     '''
-#     password1 = forms.CharField(label='password1',widget=forms.PasswordInput)       
-#     password1 = forms.CharField(label='password1',widget=forms.PasswordInput) 
+#     password1 = forms.CharField(label='password1',widget=forms.PasswordInput)
+#     password1 = forms.CharField(label='password1',widget=forms.PasswordInput)
 #     ''' for custom form most use minimum required from base model'''
-
 
 
 class CustomUserAdmin(UserAdmin):
     model = User
     # add_form = CustomUserCreationsForm
     # change_password_form = CustomUserChangePasswordForm
-    list_display = ('email', 'is_superuser', 'is_active', 'is_verified')
-    list_filter = ('email', 'is_superuser', 'is_active', 'is_verified')
-    searching_fields = ('email',)
-    ordering = ('email',)
+    list_display = ("email", "is_superuser", "is_active", "is_verified")
+    list_filter = ("email", "is_superuser", "is_active", "is_verified")
+    searching_fields = ("email",)
+    ordering = ("email",)
     fieldsets = (
-        ('Authentication', {
-            "fields": (
-                'email','password'
-            ),
-        }),
-        ('Permissions', {
-            "fields": (
-                'is_staff','is_superuser','is_active', 'is_verified'
+        (
+            "Authentication",
+            {
+                "fields": ("email", "password"),
+            },
+        ),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_staff",
+                    "is_superuser",
+                    "is_active",
+                    "is_verified",
                 ),
-        }),
-         ('Group permissions', {
-            "fields": (
-                'groups','user_permissions'
-                ),
-        }),
-         ('Important date', {
-            "fields": (
-                'last_login',
-                ),
-        }),
+            },
+        ),
+        (
+            "Group permissions",
+            {
+                "fields": ("groups", "user_permissions"),
+            },
+        ),
+        (
+            "Important date",
+            {
+                "fields": ("last_login",),
+            },
+        ),
     )
 
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': (
-                'email','password1','password2','is_staff','is_active','is_superuser','is_verified'
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password1",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                    "is_superuser",
+                    "is_verified",
                 ),
-        }),
+            },
+        ),
     )
 
 
-
-    
 admin.site.register(Profile)
-admin.site.register(User,CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)

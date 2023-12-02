@@ -5,6 +5,6 @@ forgot password
 {% endblock %}
 
 {% block html %}
-http://127.0.0.1:8000/accounts/api/v1/password-reset/{{uidb64}}/{{token}}
+http://{{current_site}}/{{realtivelink}}/{{uidb64}}/{{token}}
 
 {% endblock %}

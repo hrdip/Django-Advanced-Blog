@@ -1,12 +1,19 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import PostSerializer, CategorySerializer
-from ... models import Post, Category
+from ...models import Post, Category
 from django.shortcuts import get_object_or_404
 from rest_framework import status, mixins, viewsets
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    GenericAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -14,7 +21,7 @@ from .paginations import DefaultPagination, CustomPagination
 
 
 # 1) Function Base View
-'''
+"""
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def postList(request):
@@ -27,9 +34,9 @@ def postList(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-   '''     
+   """
 
-'''
+"""
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def postDetail(request,id):
@@ -45,7 +52,7 @@ def postDetail(request,id):
     elif request.method == 'DELETE':
         post.delete()
         return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
-    '''    
+    """
 # 2) Class Base View by APIView
 '''
 class PostList(APIView):
@@ -67,7 +74,7 @@ class PostList(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-   ''' 
+   '''
 
 '''
 class PostDetail(APIView):
@@ -164,7 +171,7 @@ class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     def post(self, request, *args, **kwargs):
         """creating a new post with provided data"""
         return self.create(request, *args, **kwargs)
-    '''    
+    '''
 
 # Example-PostDetail (2) For Class Base view for GenerciView with RetrieveModelMixin, UpdateModelMixin and DestroyModelMixin
 '''
@@ -186,7 +193,7 @@ class PostDetail(GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMi
     def delete(self, request, *args, **kwargs):
         """deleting the post object""" 
         return self.destroy(request, *args, **kwargs) 
-    ''' 
+    '''
 
 
 # Example-PostList (3) For Class Base view for ListCreateAPIView
@@ -214,7 +221,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 # 3) Class Base View (ViewSet)
 # Example for ViewSet in CBV
-'''
+"""
 class PostViewSet(viewsets.ViewSet):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -241,22 +248,26 @@ class PostViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         pass
-    '''
+    """
 
 
 # 4) Class Base View (ModelViewSet)
 # Example for ModelViewSet in CBV
 # The Best One
 class PostModelViewSet(viewsets.ModelViewSet):
-
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = {'category':['exact','in'], 'author':['exact','in'], 'status':['exact']}
-    search_fields = ['title', '$content', '=category__name']
-    ordering_fields = ['published_date']
+    filterset_fields = {
+        "category": ["exact", "in"],
+        "author": ["exact", "in"],
+        "status": ["exact"],
+    }
+    search_fields = ["title", "$content", "=category__name"]
+    ordering_fields = ["published_date"]
     pagination_class = CustomPagination
+
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
