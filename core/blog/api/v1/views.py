@@ -51,7 +51,7 @@ def postDetail(request,id):
         return Response(serializer.data)
     elif request.method == 'DELETE':
         post.delete()
-        return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
+        return Response({"detail":"Item removed successfully"},status=status.HTTP_204_NO_CONTENT)
     """
 # 2) Class Base View by APIView
 '''
@@ -67,7 +67,6 @@ class PostList(APIView):
         # serializer = PostSerializer(posts,many=True)
         serializer = self.serializer_class(posts,many=True)
         return Response(serializer.data)
-    
     def post(self, request):
         """creating a new post with provided data"""
         serializer = self.serializer_class(data=request.data)
@@ -87,7 +86,6 @@ class PostDetail(APIView):
         post = get_object_or_404(Post,pk=id,status=True)
         serializer = self.serializer_class(post)
         return Response(serializer.data)
-    
     def put(self, request, id):
         """editing the post data """
         post = get_object_or_404(Post,pk=id,status=True)
@@ -95,12 +93,11 @@ class PostDetail(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
     def delete(self, request, id):
-        """deleting the post object""" 
+        """deleting the post object"""
         post = get_object_or_404(Post,pk=id,status=True)
         post.delete()
-        return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT )  
+        return Response({"detail":"Item removed successfully"}, status=status.HTTP_204_NO_CONTENT)
     '''
 
 # 3) Class Base View by GenericView
@@ -118,7 +115,6 @@ class PostList(GenericAPIView):
         queryset = self.get_queryset()
         serializer = self.serializer_class(queryset,many=True)
         return Response(serializer.data)
-    
     def post(self, request):
         """creating a new post with provided data"""
         serializer = self.serializer_class(data=request.data)
@@ -138,7 +134,6 @@ class PostDetail(GenericAPIView):
         post = get_object_or_404(Post,pk=id,status=True)
         serializer = self.serializer_class(post)
         return Response(serializer.data)
-    
     def put(self, request, id):
         """editing the post data """
         post = get_object_or_404(Post,pk=id,status=True)
@@ -146,12 +141,11 @@ class PostDetail(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
     def delete(self, request, id):
-        """deleting the post object""" 
+        """deleting the post object"""
         post = get_object_or_404(Post,pk=id,status=True)
         post.delete()
-        return Response({"detail" : " Item removed successfully"}, status=status.HTTP_204_NO_CONTENT ) 
+        return Response({"detail":"Item removed successfully"},status=status.HTTP_204_NO_CONTENT)
     '''
 
 # Example-PostList (2) For Class Base view for GenerciView with ListModelMixin and CreateModelMixin
@@ -166,8 +160,6 @@ class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
     def get(self, request, *args, **kwargs):
         """retriving a list of posts"""
         return self.list(request, *args, **kwargs)
-    
-
     def post(self, request, *args, **kwargs):
         """creating a new post with provided data"""
         return self.create(request, *args, **kwargs)
@@ -185,14 +177,12 @@ class PostDetail(GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMi
     def get(self, request, *args, **kwargs):
         """retriveing the post data"""
         return self.retrieve(request, *args, **kwargs)
- 
     def put(self, request, *args, **kwargs):
         """editing the post data """
         return self.update(request, *args, **kwargs)
-    
     def delete(self, request, *args, **kwargs):
-        """deleting the post object""" 
-        return self.destroy(request, *args, **kwargs) 
+        """deleting the post object"""
+        return self.destroy(request,*args,**kwargs)
     '''
 
 
@@ -231,22 +221,17 @@ class PostViewSet(viewsets.ViewSet):
     def list(self, request):
         serializer = self.serializer_class(self.queryset,many=True)
         return Response(serializer.data)
-    
     def retrieve(self, request, pk=None):
         post_object = get_object_or_404(self.queryset, pk=pk)
         serializer = self.serializer_class(post_object)
         return Response(serializer.data)
-    
-    def create(self, request):
+    def create(self,request):
         pass
-
-    def update(self, request, pk=None):
-        pass 
-    
-    def partial_update(self, request, pk=None):
+    def update(self,request,pk=None):
         pass
-
-    def destroy(self, request, pk=None):
+    def partial_update(self,request,pk=None):
+        pass
+    def destroy(self,request,pk=None):
         pass
     """
 

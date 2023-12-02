@@ -57,7 +57,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     # the category id and category name are shown but for post creations only category name is taken
     """
-    def to_representation(self, instance): 
+    def to_representation(self,instance):
         rep = super().to_representation(instance)
         rep['category'] = CategorySerializer(instance.category).data
         return rep

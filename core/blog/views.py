@@ -66,7 +66,7 @@ class PostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     ordering = "-id"
     permission_required = "blog.view_post"
 
-    """ 
+    """
     insted of model and queryset we can customize with
     this function
     """
