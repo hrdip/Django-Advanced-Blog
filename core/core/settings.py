@@ -165,11 +165,12 @@ REST_FRAMEWORK = {
 
 
 # SIMPLE JWT SETTINGS
+'''
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
-
+'''
 
 # Email Configurations
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

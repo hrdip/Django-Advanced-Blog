@@ -23,6 +23,6 @@ pytest
 pytest-django
 
 # Documentations
-# coreapi
+coreapi
 
 
