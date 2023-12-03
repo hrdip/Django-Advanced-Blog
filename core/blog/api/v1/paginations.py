@@ -3,13 +3,13 @@ from rest_framework.response import Response
 
 
 class DefaultPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 6
     page_size_query_param = "page_size"
     max_page_size = 100
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 6
 
     def get_paginated_response(self, data):
         return Response(
