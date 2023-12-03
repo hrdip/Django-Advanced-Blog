@@ -32,7 +32,7 @@ class TestPostApi:
             "title": "test",
             "content": "description",
             "status": True,
-            "published_date": datetime.now()
+            "published_date": datetime.now(),
         }
         response = api_client.post(url, data)
         assert response.status_code == 403
@@ -43,7 +43,7 @@ class TestPostApi:
             "title": "test",
             "content": "description",
             "status": True,
-            "published_date": datetime.now()
+            "published_date": datetime.now(),
         }
         user = common_user
         api_client.force_authenticate(user=user)
