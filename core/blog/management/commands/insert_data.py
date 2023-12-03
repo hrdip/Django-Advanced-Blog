@@ -13,12 +13,12 @@ category_list = [
     "Building",
     "Fixture",
     "Wiring",
-    "AcidResistance"
+    "AcidResistance",
 ]
 
 
 class Command(BaseCommand):
-    help = 'inserting_dummy_data'
+    help = "inserting_dummy_data"
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -43,5 +43,5 @@ class Command(BaseCommand):
                 content=self.fake.paragraph(nb_sentences=10),
                 status=random.choice([True, False]),
                 category=Category.objects.get(name=random.choice(category_list)),
-                published_date=datetime.now()
+                published_date=datetime.now(),
             )
