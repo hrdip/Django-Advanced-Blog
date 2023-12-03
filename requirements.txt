@@ -21,6 +21,7 @@ black
 flake8
 pytest
 pytest-django
+faker
 
 # Documentations
 coreapi
