@@ -27,4 +27,7 @@ faker
 # Documentations
 coreapi
 
-
+# Background proccess and cache
+celery
+redis
+django-celery-beat

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "mail_templated",
     "djoser",
     "corsheaders",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -153,9 +154,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ]
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_AUITHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
@@ -185,3 +183,13 @@ EMAIL_PORT = 25
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Celery Configs
+CELERY_BROKER_URL = "redis://redis:6379/1" 
+
+# CELERY_BEAT_SCHEDULE = {
+#    'send_email':{
+#        'task':'accounts.tasks.sendEmail',
+#        'schedule':5
+#    }
+#}
