@@ -25,6 +25,8 @@ services:
       - DEBUG=False
     depends_on:
       - redis
+      - db
+
 
 
   nginx:
@@ -41,6 +43,7 @@ services:
       - redis
       - backend
 
+
   worker:
     build: .
     command: celery -A core worker --loglevel=info
@@ -50,6 +53,34 @@ services:
       - redis
       - backend
 
+
+  db:
+    container_name: postgresql
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Hrdip@2010
+      POSTGRES_DB: test_db
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: Hrdip@2010
+    ports:
+      - "5050:80"
+
+
 volumes:
   static_volume:
   media_volume:
+  postgres_volume:
+    external: true

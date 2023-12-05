@@ -33,3 +33,6 @@ celery
 redis
 django-redis
 django-celery-beat
+
+# db
+psycopg2-binary
