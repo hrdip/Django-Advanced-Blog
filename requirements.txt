@@ -36,3 +36,4 @@ django-celery-beat
 
 # db
 psycopg[binary,pool]
+psycopg2-binary
