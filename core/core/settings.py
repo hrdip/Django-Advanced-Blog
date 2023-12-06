@@ -104,7 +104,7 @@ DATABASES = {
         "NAME": "test_db",
         "USER": "admin",
         "PASSWORD": "Hrdip@2010",
-        "HOST": "db",
+        "HOST": "cb3ab323d885",
         "PORT": "5432",
     }
 }
