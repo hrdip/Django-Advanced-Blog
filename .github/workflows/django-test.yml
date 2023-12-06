@@ -18,9 +18,11 @@ jobs:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: Hrdip@2010
           POSTGRES_DB: test_db
-          POSTGRES_PORT: 5432
         ports:
-          - 5432/tcp
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      env: 
+        PGDB_HOST: 172.19.0.7
 
     steps:
     - uses: actions/checkout@v3
