@@ -106,6 +106,10 @@ DATABASES = {
         "PASSWORD": "Hrdip@2010",
         "HOST": "172.19.0.7",
         "PORT": "5432",
+        "OPTIONS": {
+            'service': 'test_svc_1',
+            'passfile': '.my_pgpass',
+        },
     }
 }
 
