@@ -13,6 +13,7 @@ djoser
 django-cors-headers
 
 # deployment modules
+gunicorn
 
 # Email third party modules
 django-mail-templated
@@ -31,3 +32,7 @@ coreapi
 celery
 redis
 django-celery-beat
+django-redis
+
+# db
+psycopg2-binary
