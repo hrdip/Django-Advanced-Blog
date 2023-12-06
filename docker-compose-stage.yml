@@ -25,7 +25,6 @@ services:
       - DEBUG=True
     depends_on:
       - redis
-      - db
 
   nginx:
     image: nginx
@@ -50,24 +49,6 @@ services:
     depends_on:
       - redis
       - backend
-
-  db:
-    container_name: db
-    image: postgres:alpine
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: Hrdip@2010
-      POSTGRES_DB: test_db
-    volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-    expose:
-      - "5432"
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
 
 volumes:
