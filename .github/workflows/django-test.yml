@@ -33,12 +33,12 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
-  #  - name: Install dependencies
-  #    run: |
-  #      python -m pip install --upgrade pip
-  #      pip install -r requirements.txt
-  #  - name: Run migrations
-  #    working-directory: ./core
-  #    run: python manage.py migrate
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run migrations
+      working-directory: ./core
+      run: python manage.py migrate
     - name: Run Tests
       run: docker exec backend sh -c "flake8 && pytest ."
