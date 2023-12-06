@@ -52,7 +52,7 @@ services:
       - backend
 
   db:
-    container_name: postgresql
+    container_name: db
     image: postgres:alpine
     restart: always
     environment:
