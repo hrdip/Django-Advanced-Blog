@@ -104,7 +104,7 @@ DATABASES = {
         "NAME": config("PGDB_NAME", default="test_db"),
         "USER": config("PGDB_USER", default="admin"),
         "PASSWORD": config("PGDB_PASS", default="Hrdip@2010"),
-        "HOST": config("PGDB_HOST", default="172.19.0.3"),
+        "HOST": config("PGDB_HOST", default="172.20.0.3"),
         "PORT": config("PGDB_PORT", cast=int, default=5432),
     }
 }

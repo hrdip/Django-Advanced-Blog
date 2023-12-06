@@ -25,6 +25,7 @@ services:
       - DEBUG=True
     depends_on:
       - redis
+      - db
 
 
   nginx:
