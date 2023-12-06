@@ -91,10 +91,21 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": BASE_DIR / "db.sqlite3",
+#    }
+#}
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": config("PGDB_ENGINE", default="django.db.backends.postgresql"),
+        "NAME": config("PGDB_NAME", default="test_db"),
+        "USER": config("PGDB_USER", default="admin"),
+        "PASSWORD": config("PGDB_PASS", default="Hrdip@2010"),
+        "HOST": config("PGDB_HOST", default="172.19.0.7"),
+        "PORT": config("PGDB_PORT", cast=int, default=5432),
     }
 }
 
@@ -193,3 +204,16 @@ CELERY_BROKER_URL = "redis://redis:6379/1"
 #        'schedule':5
 #    }
 #}
+
+
+# cashing config
+CACHES = {
+    "default":{
+        "BACKEND":"django_redis.cache.RedisCache",
+        "LOCATION":"redis://redis:6379/2",
+        #"TIMEOUT":60,
+        "OPTIONS":{
+            "CLIENT_CLASS":"django_redis.client.DefaultClient",
+        }
+    }
+}
