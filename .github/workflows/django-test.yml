@@ -25,9 +25,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup Docker-Compose
-      run: docker-compose up -d
+      run: docker-compose -f docker-compose-stage.yml up --build
     - name: Run migrations
       working-directory: ./core
       run: python manage.py migrate
     - name: Run Tests
+      env:
+        DJANGO_SETTINGS_MODULE: core.settings
       run: docker exec backend sh -c "flake8 && pytest ."
