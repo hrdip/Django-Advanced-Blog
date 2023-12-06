@@ -12,19 +12,33 @@ jobs:
 
     runs-on: ubuntu-latest
     services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: Hrdip@2010
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+    #  postgres:
+    #    image: postgres
+    #    env:
+    #      POSTGRES_USER: admin
+    #      POSTGRES_PASSWORD: Hrdip@2010
+    #      POSTGRES_DB: test_db
+    #    ports:
+    #      - 5432:5432
+    #    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    #
+    #env: 
+    #  HOST: 127.0.0.1
+    
     steps:
     - uses: actions/checkout@v3
     - name: Setup Docker-Compose
-      run: docker-compose up -d
+      run: docker-compose -f docker-compose-stage.yml up -d
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+  #  - name: Install dependencies
+  #    run: |
+  #      python -m pip install --upgrade pip
+  #      pip install -r requirements.txt
+  #  - name: Run migrations
+  #    working-directory: ./core
+  #    run: python manage.py migrate
     - name: Run Tests
       run: docker exec backend sh -c "flake8 && pytest ."

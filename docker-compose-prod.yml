@@ -13,7 +13,10 @@ services:
   backend:
     build: .
     container_name: backend
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    command: sh -c "python manage.py check_database && \ 
+                    yes | python manage.py makemigrations  && \
+                    yes | python manage.py migrate  && \
+                    gunicorn core.wsgi --bind 0.0.0.0:8000"
     volumes:
       - ./core:/app
       - static_volume:/app/static
@@ -64,8 +67,8 @@ services:
       POSTGRES_DB: test_db
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
