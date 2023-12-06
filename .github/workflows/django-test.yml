@@ -21,12 +21,12 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-      env: 
-        HOST: 172.19.0.7
 
     steps:
     - uses: actions/checkout@v3
     - name: Setup Docker-Compose
       run: docker-compose up -d
+    - name: Run migrations
+      run: python manage.py migrate
     - name: Run Tests
       run: docker exec backend sh -c "flake8 && pytest ."
