@@ -108,7 +108,6 @@ DATABASES = {
         "PORT": "5432",
         "OPTIONS": {
             'service': 'test_svc_1',
-            'passfile': '.my_pgpass',
         },
     }
 }
