@@ -1,44 +1,96 @@
-name: Django Project Test
+#name: Django Project Test without postgres
+#
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+#
+#jobs:
+#
+#  build:
+#
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: Setup Docker-Compose
+#      run: docker-compose -f docker-compose-prod.yml up -d
+#    - name: Run Tests
+#      run: docker exec backend sh -c "flake8 && pytest ."
+
+
+
+# migration docs: 
+name: postgres test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
+# list of all jobs
 jobs:
 
-  build:
+  # testing stage of the project
+  Test:
+    # declaring the name of this job
+    name: Test
 
+    # which operating system its going to use
     runs-on: ubuntu-latest
+
+    # services dependency
     services:
-      postgres:
+
+      # database which django is going to interact with
+      db:
+
+        # database image and version/tag
         image: postgres
+
+        # environment for configuring the database
         env:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: Hrdip@2010
           POSTGRES_DB: test_db
+
+        # mapping ports
         ports:
           - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    
+
+    # global environment for this job
     env: 
-      HOST: 127.0.0.1
+      PGDB_HOST: 127.0.0.1
     
+    # steps which it will go through for test
     steps:
+    
+    # bringing the code and checking 
     - uses: actions/checkout@v3
-    - name: Setup Docker-Compose
-      run: docker-compose -f docker-compose-prod.yml up -d
-  #  - name: Set up Python 3.9
-  #    uses: actions/setup-python@v4
-  #    with:
-  #      python-version: 3.9
-  #  - name: Install dependencies
-  #    run: |
-  #      python -m pip install --upgrade pip
-  #      pip install -r requirements.txt
-  #  - name: Run migrations
-  #    working-directory: ./core
-  #    run: python manage.py migrate
-    - name: Run Tests
-      run: docker exec backend sh -c "flake8 && pytest ."
+
+    # setup python environment and version
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    # installing django dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # running all migrations
+    - name: Run migrations
+      working-directory: ./core
+      run: python manage.py migrate
+
+    # testing the project from the root directory of core
+    - name: Run tests
+      working-directory: ./core
+      env:
+        DJANGO_SETTINGS_MODULE: core.settings
+      run: pytest .
