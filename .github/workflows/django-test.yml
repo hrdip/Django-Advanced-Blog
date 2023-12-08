@@ -25,14 +25,23 @@ jobs:
     needs: Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Connect and Executed Commands
+    - name: Chekout the files
+      uses: actions/checkout@v3
+    
+    - name: Deploy to AWS Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+        REMOTE_HOST: ${{secrets.HOST_DNS}}
+        REMOTE_USER: ${{secrets.USERNAME}}
+        TARGET: ${{secrets.TARGET_DIR}}
+
+    - name: Executing remote ssh commands
       uses: appleboy/ssh-action@master
       with:
         username: ${{secrets.USERNAME}}
-        password: ${{secrets.PASSWORD}}
-        host: ${{secrets.HOST}}
-        port: ${{secrets.PORT}}
+        host: ${{secrets.HOST_DNS}}
+        key: ${{secrets.EC2_SSH_KEY}}
         script: |
           cd ${{secrets.PROJECT_PATH}}
           docker-compose -f docker-compose-stage.yml stop
