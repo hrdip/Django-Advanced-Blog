@@ -1,27 +1,71 @@
-<dev>
-Introduction
-</dev>
-This repository includes all the source code and what ever we used in the tutorial, and will be here as a refrence for students to keep looking for further projects.
 
-Curriculum
-below you can find all the subjects that we talked about in this tutorial:
+<h1> 
+  Introduction
+</h1>
 
-Introduction of the course
-Setting up project with Docker (dockerfile/docker-compose)
-Setup Django Model for a Blog and AbstractBaseUser
-Implement Class Based Views
-Django RestFramework and Serializers (FBV)
-ClassBasedViews in RestFramework (views,generic,viewset)
-Api Documentation with swagger and redoc
-Authentication API (Token/JWT)
-Reformat and Lint (flake8,black)
-Django TestCase and PyTest
-Django CI with github actions
-Populate Database with Faker and Django Commands
-Cores Headers
-Load Testing with Locust
-Background process with celery and redis
-Cacheing with redis
-Get ready for deploy (gunicorn/nginx)
-Setup aws ec2 vps 
-Django CD with github actions
+<p>
+  This repository includes all the source code and what ever we used in the tutorial, and will be here as a refrence for students to keep looking for further projects.
+</p>
+<h1>
+  Curriculum
+</h1>
+<p>
+  below you can find all the subjects that we talked about in this tutorial:
+</p>
+<p>
+  Introduction of the course
+</p>
+<p>
+  Setting up project with Docker (dockerfile/docker-compose)
+</p>
+<p>  
+  Setup Django Model for a Blog and AbstractBaseUser
+</p>
+<p>
+  Implement Class Based Views
+</p>
+<p>
+  Django RestFramework and Serializers (FBV)
+</p>
+<p>
+  ClassBasedViews in RestFramework (views,generic,viewset)
+</p>
+<p>
+  Api Documentation with swagger and redoc
+</p>
+<p>
+  Authentication API (Token/JWT)
+</p>
+<p>
+  Reformat and Lint (flake8,black)
+</p>
+<p>
+  Django TestCase and PyTest
+</p>
+<p>
+  Django CI with github actions
+</p>
+<p>
+  Populate Database with Faker and Django Commands
+</p>
+<p>
+  Cores Headers
+</p>
+<p>
+  Load Testing with Locust
+</p>
+<p>
+  Background process with celery and redis
+</p>
+<p>
+  Cacheing with redis
+</p>
+<p>
+  Get ready for deploy (gunicorn/nginx)
+</p>
+<p>
+  Setup aws ec2 vps 
+</p>
+<p>
+  Django CD with github actions
+</p>
