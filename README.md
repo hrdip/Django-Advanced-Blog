@@ -4,16 +4,22 @@
   </h1>
 </p>
  <hr/>
-<p>
-  <a href="#introduction">
-    Introduction
-  </a>
-</p>
-<p>
-  <a href="#curriculm">
-    Curriculum
-  </a>
-</p>
+<ul>
+  <li>
+    <p>
+      <a href="#introduction">
+        Introduction
+      </a>
+    </p>
+  </li>
+  <li>
+    <p>
+      <a href="#curriculm">
+        Curriculum
+      </a>
+    </p>
+  </li>
+</ul>
 <h1 id="introduction"> 
   Introduction
 </h1>
