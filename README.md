@@ -3,17 +3,20 @@
     Guideline
   </h1>
 </p>
-<hr/>
-<a href="#introduction">
-  Introduction
-</a>
-<a href="#curriculm">
-  Curriculum
-</a>
+<p>
+  <a href="#introduction">
+    Introduction
+  </a>
+</p>
+<p>
+  <a href="#curriculm">
+    Curriculum
+  </a>
+</p>
 <h1 id="introduction"> 
   Introduction
 </h1>
-<hr/>
+
 <p>
   This repository includes all the source code and what ever we used in the tutorial, and will be here as a refrence for students to keep looking for further projects.
 </p>
