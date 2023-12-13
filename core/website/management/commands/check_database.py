@@ -6,7 +6,7 @@ from django.db.utils import OperationalError
 
 class Command(BaseCommand):
     help = 'check if database is online to proceed'
-    
+
     def handle(self, *args, **kwargs):
         print("Start checking for database...")
         db_conn = None
