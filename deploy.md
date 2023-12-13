@@ -70,4 +70,4 @@ git clone <our repo ssh code>
 cd Django-Advanced-Blog/
 
 # run docker-compose
-docker-compose -f docker-compose-stage.yml up
+docker-compose -f docker-compose-stage.yml up --build -d
