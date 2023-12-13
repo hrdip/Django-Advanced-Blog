@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY", default="test")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=True)
+
+SHOW_DEBUGGER_TOOLBAR = config("SHOW_DEBUGGER_TOOLBAR", cast=bool, default=False)
+
+SITE_ID = config("SITE_ID", cast=int, default=1)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
@@ -90,25 +95,25 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "test_db",
+            "USER": "admin",
+            "PASSWORD": "Hrdip@2010",
+            "HOST": "postgresql",
+            "PORT": "5432",
+        }
+    }
 
-#DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.postgresql",
-#        "NAME": "test_db",
-#        "USER": "admin",
-#        "PASSWORD": "Hrdip@2010",
-#        "HOST": "postgresql",
-#        "PORT": "5432",
-#    }
-#}
-#
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -134,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = config("TIME_ZONE", default="UTC")
 
 USE_I18N = True
 
@@ -156,6 +161,17 @@ STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
 
+
+# messages configuration for notification handeling in pages
+MESSAGE_TAGS = {
+    messages.DEBUG: "info",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",
+}
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -165,6 +181,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_AUITHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
@@ -174,46 +193,141 @@ REST_FRAMEWORK = {
     ],
 }
 
+if config("DISABLE_BROWSEABLE_API", cast=bool, default=False):
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
+        "rest_framework.renderers.JSONRenderer",
+    )
+
 
 # SIMPLE JWT SETTINGS
-"""
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
 }
-"""
 
 # Email Configurations
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = False
-EMAIL_HOST = "smtp4dev"
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
-EMAIL_PORT = 25
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_USE_TLS = False
+    EMAIL_HOST = "smtp4dev"
+    EMAIL_HOST_USER = ""
+    EMAIL_HOST_PASSWORD = ""
+    EMAIL_PORT = 25
+else:
+    EMAIL_BACKEND = config(
+        "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+    )
+    EMAIL_HOST = config("EMAIL_HOST", default="mail.example.come")
+    EMAIL_PORT = int(config("EMAIL_PORT", default=465))
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="infor@example.com")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=True)
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=False)
+    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="infor@example.com")
 
+
+if config("USE_SSL_CONFIG", cast=bool, default=False):
+    # Https settings
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_SSL_REDIRECT = True
+
+    # HSTS settings
+    # SECURE_HSTS_SECONDS = 31536000  # 1 year
+    # SECURE_HSTS_PRELOAD = True
+    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+    # more security settings#
+    SECURE_CONTENT_TYPE_NOSNIFF = True  #
+    # SECURE_BROWSER_XSS_FILTER = True#
+    # X_FRAME_OPTIONS = "SAMEORIGIN"#
+    # SECURE_REFERRER_POLICY = "strict-origin"
+    # USE_X_FORWARDED_HOST = True
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Celery Configs
-CELERY_BROKER_URL = "redis://redis:6379/1" 
+CELERY_BROKER_URL = "redis://redis:6379/1"
 
 # CELERY_BEAT_SCHEDULE = {
 #    'send_email':{
 #        'task':'accounts.tasks.sendEmail',
 #        'schedule':5
 #    }
-#}
+# }
 
 
 # cashing config
 CACHES = {
-    "default":{
-        "BACKEND":"django_redis.cache.RedisCache",
-        "LOCATION":"redis://redis:6379/2",
-        #"TIMEOUT":60,
-        "OPTIONS":{
-            "CLIENT_CLASS":"django_redis.client.DefaultClient",
-        }
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        # "TIMEOUT":60,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
     }
 }
+
+
+# swagger configs
+SHOW_SWAGGER = config("SHOW_SWAGGER", cast=bool, default=True)
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": True,
+    "SECURITY_DEFINITIONS": [],
+    "LOGIN_URL": "rest_framework:login",
+    "LOGOUT_URL": "rest_framework:logout",
+    "REFETCH_SCHEMA_ON_LOGOUT": True,
+    "JSON_EDITOR": True,
+}
+
+# ??
+if config("FILE_DEBUGGER", cast=bool, default=True):
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "simple": {
+                "format": "%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s"
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": "log.django",
+                "formatter": "simple",
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console", "file"],
+                "level": config("DJANGO_LOG_LEVEL", default="WARNING"),
+                "propagate": True,
+            },
+        },
+    }
+
+# django debug toolbar for docker usage
+if SHOW_DEBUGGER_TOOLBAR:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+    import socket  # only if you haven't already imported this
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
+        "127.0.0.1",
+        "10.0.2.2",
+    ]

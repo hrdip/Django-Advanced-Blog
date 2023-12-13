@@ -2,9 +2,9 @@ name: Django Project Test without postgres
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "prod" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "prod" ]
 
 jobs:
 
@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup Docker-Compose
-      run: docker-compose -f docker-compose-stage.yml up -d
+      run: docker-compose -f docker-compose-prod.yml up -d
     - name: Run Tests
       run: docker exec backend sh -c "flake8 && pytest ."
  
@@ -44,9 +44,9 @@ jobs:
         key: ${{secrets.EC2_SSH_KEY}}
         script: |
           cd ${{secrets.PROJECT_PATH}}
-          docker-compose -f docker-compose-stage.yml stop
+          docker-compose -f docker-compose-prod.yml stop
           git pull
-          docker-compose -f docker-compose-stage.yml restart
+          docker-compose -f docker-compose-prod.yml restart
           
 
 

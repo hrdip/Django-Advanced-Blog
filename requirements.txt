@@ -11,6 +11,8 @@ drf-yasg[validation]
 djangorestframework-simplejwt
 djoser
 django-cors-headers
+django-robots
+django-debug-toolbar
 
 # deployment modules
 gunicorn
