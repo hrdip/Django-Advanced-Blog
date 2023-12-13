@@ -67,7 +67,7 @@ cat .ssh/id_ed25519.pub
 git clone <our repo ssh code>
 
 # change directory to our repo
-cd Django-Advanced_Blog/
+cd Django-Advanced-Blog/
 
 # run docker-compose
 docker-compose -f docker-compose-stage.yml up

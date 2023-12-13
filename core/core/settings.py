@@ -286,7 +286,7 @@ SWAGGER_SETTINGS = {
     "JSON_EDITOR": True,
 }
 
-# ??
+# LOGGING
 if config("FILE_DEBUGGER", cast=bool, default=True):
     LOGGING = {
         "version": 1,
