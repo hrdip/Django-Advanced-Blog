@@ -7,6 +7,7 @@ from ..serializers.accounts import (
     ActivationResendSerializer,
     ResetPasswordViaEmailSerializer,
     ResetPassWordSerializer,
+    TestEmailSendSerializer,
 )
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -125,6 +126,8 @@ class ChangePasswordApiView(generics.GenericAPIView):
 
 # Acctivated user login
 class TestEmailSend(generics.GenericAPIView):
+    serializer_class = TestEmailSendSerializer
+
     def get(self, request, *args, **kwargs):
         self.email = "hrdip.2018@gmail.com"
         user_obj = get_object_or_404(User, email=self.email)

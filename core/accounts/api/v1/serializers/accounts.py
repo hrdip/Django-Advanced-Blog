@@ -107,15 +107,6 @@ class ActivationResendSerializer(serializers.Serializer):
         return super().validate(attrs)
 
 
-class ResetPasswordViaEmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-    def validate(self, attrs):
-        email = attrs.get("email")
-        user_obj = User.objects.get(email=email)
-        return super().validate(attrs)
-
-
 class ResetPassWordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True)
     new_password1 = serializers.CharField(required=True)
@@ -128,3 +119,19 @@ class ResetPassWordSerializer(serializers.Serializer):
         except serializers.ValidationError as err:
             raise serializers.ValidationError({"new_password": list(err.messages)})
         return super().validate(attrs)
+
+
+class ResetPasswordViaEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        user_obj = User.objects.get(email=email)
+        return super().validate(attrs)
+
+
+class TestEmailSendSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = "__all__"
