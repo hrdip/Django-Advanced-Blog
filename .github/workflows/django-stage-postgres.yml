@@ -69,6 +69,7 @@ jobs:
     - name: Run tests
       env:
         DJANGO_SETTINGS_MODULE: core.settings
+      working-directory: ./core
       run: pytest .
 
   Deploy:
