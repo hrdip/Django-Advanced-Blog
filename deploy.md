@@ -11,7 +11,7 @@ sudo apt-get install git
 # git clone 
 git clone https://github.com/hrdip/Django-Advanced-Blog.git
 
-# delete old docker
+# delete ogild docker
 sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 # INSTALLATION DOCKER

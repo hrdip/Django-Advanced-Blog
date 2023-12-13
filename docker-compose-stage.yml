@@ -15,7 +15,7 @@ services:
     image: postgres:alpine
     restart: always
     env_file:
-      - envs/stage/db/.env
+      - envs/stage/db/.env.sample
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -43,7 +43,7 @@ services:
     expose:
       - "8000"
     env_file:
-      - envs/stage/django/.env
+      - envs/stage/django/.env.sample
     depends_on:
       - redis
       - db
