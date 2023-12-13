@@ -31,6 +31,9 @@ sudo groupadd docker
 # add user to group
 sudo usermod -aG docker $USER
 
+# add new group
+newgrp docker
+
 # settings
 sudo systemctl enable docker.service
 
