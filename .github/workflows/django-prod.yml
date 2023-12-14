@@ -2,9 +2,9 @@ name: Django Project Test without postgres
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "maint" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "maint" ]
 
 jobs:
 
