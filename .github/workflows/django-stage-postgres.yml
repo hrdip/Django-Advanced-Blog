@@ -3,9 +3,9 @@ name: Django Project Test and Deploy
 # define which repo to listen to for trigger
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "stage" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "stage" ]
 
 jobs:
 
