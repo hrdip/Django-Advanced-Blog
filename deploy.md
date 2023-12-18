@@ -39,7 +39,7 @@ sudo systemctl enable docker.service
 
 # run docker
 sudo systemctl enable containerd.service
-
+# ??sudo systemctl enable docker images
 # INSTALLATION DOCKER-COMPOSE
 # install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -74,3 +74,30 @@ cd Django-Advanced-Blog/
 
 # run docker-compose
 docker-compose -f docker-compose-stage.yml up --build -d
+
+# Installing Nginx
+sudo apt update
+sudo apt install nginx
+
+# Adjusting the Firewall
+sudo ufw app list
+
+# You can enable this by typing
+sudo ufw allow 'Nginx HTTP'
+
+# You can verify the change by typing
+sudo ufw status
+
+# if status disable
+sudo ufw enable
+
+# Checking your Web Server
+systemctl status nginx
+
+# if is not active
+sudo fuser -k 80/tcp
+sudo fuser -k 443/tcp
+sudo service nginx restart
+
+# get url for connection
+curl -4 icanhazip.com
