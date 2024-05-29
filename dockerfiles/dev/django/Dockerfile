@@ -9,10 +9,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # after make image we work in this directory( keeping in "app" folder inside of python image we build now)
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # copy requirements.txt file to the working directory (app)
-COPY requirements.txt /app/
+COPY ./requirements.txt .
 
 
 RUN pip3 install --upgrade pip
