@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
-
+# if we want make User class we need use Manager class(higher level)
 class UserManager(BaseUserManager):
     """custom user model manager where email is the uniqu identifiers
     for authentication instead of username
@@ -44,6 +44,8 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+# custom user model inheritance AbstractBaseUser
+# we want to create a user from the base, then use AbstractBaseUser instead of AbstractUser
 class User(AbstractBaseUser, PermissionsMixin):
     """
     custom User Model for our app
@@ -55,7 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
     objects = UserManager()
+    # we want use email instead of username
     USERNAME_FIELD = "email"
+    # we can choose which field are required
     REQUIRED_FIELDS = []
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
