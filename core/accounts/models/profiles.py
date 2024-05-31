@@ -25,7 +25,7 @@ class Profile(models.Model):
 
 
 # when the user is created, the profile is created too automatically. we need to link this two models
-# post_save means after create user do this 
+# post_save means after create user do this
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
     if created:

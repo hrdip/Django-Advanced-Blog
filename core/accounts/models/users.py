@@ -8,8 +8,10 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
+
 # if we want make User class we need use Manager class(higher level)
 class UserManager(BaseUserManager):
+
     """custom user model manager where email is the uniqu identifiers
     for authentication instead of username
     """
