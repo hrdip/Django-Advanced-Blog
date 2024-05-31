@@ -7,6 +7,7 @@ from .users import User
 
 
 class Profile(models.Model):
+    # CASCADE means if the user was deleted, delete this profile related to that user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -23,6 +24,8 @@ class Profile(models.Model):
         return self.user.email
 
 
+# when the user is created, the profile is created too automatically. we need to link this two models
+# post_save means after create user do this 
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
     if created:

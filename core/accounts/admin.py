@@ -4,7 +4,7 @@ from .models import User, Profile
 
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 # from django import forms
-# Register your models here.
+
 
 # class CustomUserCreationsForm(UserCreationForm):
 #     '''
@@ -31,6 +31,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ("email", "is_superuser", "is_active", "is_verified")
     searching_fields = ("email",)
     ordering = ("email",)
+    # fieldsets for edit form user
     fieldsets = (
         (
             "Authentication",
@@ -62,7 +63,7 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-
+    # fieldsets for add form user
     add_fieldsets = (
         (
             None,

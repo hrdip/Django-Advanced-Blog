@@ -5,6 +5,7 @@ from django.urls import reverse
 # Create your models here.
 
 # getting user model object
+# this function gets the user model which mean this function is exactly our User class
 # User = get_user_model()
 
 
@@ -18,6 +19,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.BooleanField()
+    # SET_NULL means if category of this post was deleted just set null instead of this category
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
     created_date = models.DateTimeField(auto_now_add=True, null=True)
     updated_date = models.DateTimeField(auto_now=True)

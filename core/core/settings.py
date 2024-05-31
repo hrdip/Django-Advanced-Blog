@@ -178,6 +178,7 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # user manager configuration
+# use custom user model instead of django user model
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
