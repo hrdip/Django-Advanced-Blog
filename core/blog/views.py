@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
 )
-
+from accounts.models import Profile
 # Create your views here.
 
 
@@ -107,7 +107,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     success_url = "/blog/post/"
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        # Retrieve the Profile instance associated with the current user
+        form.instance.author = Profile.objects.get(user=self.request.user)
         return super().form_valid(form)
 
 
