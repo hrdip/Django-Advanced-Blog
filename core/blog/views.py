@@ -40,7 +40,9 @@ class IndexView(TemplateView):
 
     # pass our argument with this function
     def get_context_data(self, **kwargs):
+        # first, go to the mother class and run get_context_data functions, with all arguments that have come with our reques
         context = super().get_context_data(**kwargs)
+        # here we can add our arguments with the key-value dictionary
         context["name"] = "hossein"
         context["posts"] = Post.objects.all()
         return context
@@ -65,11 +67,12 @@ class PostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     queryset = Post.objects.all()
     context_object_name = "posts"
     paginate_by = 2
+    # if we want to order like this, we must use model or queryset for get objects, if we want to use get_queryset function, we must do ordering into the function not here
     ordering = "-id"
     permission_required = "blog.view_post"
 
     """
-    insted of model and queryset we can customize with
+    instead of model and queryset we can customize with
     this function
     """
     # def get_queryset(self):
@@ -87,24 +90,32 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 
 # Custom Class Base View for FormView
+# show form to user and get data from user and send with email to admin user
 """
 class PostCreateView(FormView):
     template_name = 'contact.html'
+    # if we want send an email, we can add a function (def send_email(self)) to the form_class we used
     form_class = PostForm
     success_url = "/blog/post/"
 
     def form_valid(self, form):
+        # if we want only save form we need to use this code
         form.save()
+        # if we have send_email function in form_class we need to use this code
+        form.send_email()
         return super().form_valid(form)
     """
 
 
 # Custom Class Base View for CreateView
+# when the user fills up the form save it on database
 class PostCreateView(LoginRequiredMixin, CreateView):
+    # this form is filled with the user must be saved on this model on the database
     model = Post
     # fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
     success_url = "/blog/post/"
+    template_name = "blog/post_create.html"
 
     def form_valid(self, form):
         # Retrieve the Profile instance associated with the current user
@@ -118,6 +129,7 @@ class PostEditView(LoginRequiredMixin, UpdateView):
     # fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
     success_url = "/blog/post/"
+    template_name = "blog/post_edit.html"
 
 
 # Custom Class Base View for DeleteView

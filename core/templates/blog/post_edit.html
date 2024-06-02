@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Create post by CreateView</title>
+</head>
+
+<body>
+   <form method="post">{% csrf_token %}
+      <div class="card-body">
+         <div class="row d-flex ">
+            <div class="col-md-6 mb-3">
+               <label>title</label>
+               {{form.title}}
+            </div>
+            <div class="col-md-6 mb-3">
+               <label>content</label>
+               {{form.content}}
+            </div>
+            <div class="col-md-6 mb-3">
+               <label>status</label>
+               {{form.status}}
+            </div>
+            <div class="col-md-6 mb-3">
+               <label>category</label>
+               {{form.category}}
+            </div>
+            <div class="col-md-6 mb-3">
+               <label>published_date</label>
+               {{form.published_date}}
+            </div>
+         </div>
+         <input type="submit" value="Save">
+      </div>
+   </form>
+
+</body>
+
+</html>
