@@ -69,6 +69,9 @@ class PostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     paginate_by = 2
     # if we want to order like this, we must use model or queryset for get objects, if we want to use get_queryset function, we must do ordering into the function not here
     ordering = "-id"
+    # use permissions for specific users to access only view posts, and we can manage in admin
+    # if user are not super user, need to have this permission to access view posts, and manage in admin
+    # we can use for all class to handle permissions for users
     permission_required = "blog.view_post"
 
     """
@@ -115,6 +118,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     # fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
     success_url = "/blog/post/"
+    # default template name for creation is post_form.html but I want to change the template name
     template_name = "blog/post_create.html"
 
     def form_valid(self, form):
@@ -129,6 +133,7 @@ class PostEditView(LoginRequiredMixin, UpdateView):
     # fields = ['title', 'content','status', 'category', 'published_date']
     form_class = PostForm
     success_url = "/blog/post/"
+    # default template name for an edit is post_form.html like creation, but I want to change the template name
     template_name = "blog/post_edit.html"
 
 
