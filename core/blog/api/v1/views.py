@@ -22,12 +22,17 @@ from .paginations import DefaultPagination, CustomPagination
 
 # 1) Function Base View
 """
+# this decorator adds rest_framework structure to the function base view
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def postList(request):
     if request.method == 'GET':
         posts = Post.objects.filter(status=True)
+        # transform item in input (post) to json with serializer
         serializer = PostSerializer(posts,many=True)
+        # in rest_framework we have response instead of HttpResponse meaning rest_framework loads only data not rendering pages
+        # serializer looks like context in the rendering page transforms data from model to json or xml like dictionary-style and returns to page with a response
+        # serializer and ModelSerializer similar to Django Forms and ModelForm, sometimes time no need for the model and sometimes we can use some fields of models to get data from users
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = PostSerializer(data=request.data)
@@ -42,6 +47,7 @@ def postList(request):
 def postDetail(request,id):
     post = get_object_or_404(Post,pk=id,status=True)
     if request.method == 'GET':
+        # transform item in input (post) to json with serializer
         serializer = PostSerializer(post)
         return Response(serializer.data)
     elif request.method == 'PUT':

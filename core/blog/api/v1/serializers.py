@@ -2,6 +2,10 @@ from rest_framework import serializers
 from ...models import Post, Category
 from accounts.models import Profile
 
+# description of serializers
+# in rest_framework we have response instead of HttpResponse meaning rest_framework loads only data not rendering pages
+# serializer looks like context in the rendering page transforms data from model to json or xml like dictionary-style and returns to page with a response
+# serializer and ModelSerializer similar to Django Forms and ModelForm, sometimes time no need for the model (Form) and sometimes we can use some fields or hole of "models" fields (ModelForm) to get data from users
 
 # model for Serializer
 """

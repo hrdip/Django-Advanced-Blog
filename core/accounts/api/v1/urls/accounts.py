@@ -15,7 +15,7 @@ urlpatterns = [
     path(
         "registration/",
         views.RegistrationApiView.as_view(),
-        name="registeation",
+        name="registration",
     ),
     # Test send email to Terminal
     path("test-email/", views.TestEmailSend.as_view(), name="test-email"),
