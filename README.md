@@ -24,7 +24,7 @@
   Introduction
 </h1>
 <p>
-  This repository includes all the source code, and will be here as a refrencefor     
+  This repository includes all the source code, and will be here as a refrence for     
   further projects.
 </p>
 <h1 id="curriculm">
