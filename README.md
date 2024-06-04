@@ -24,14 +24,14 @@
   Introduction
 </h1>
 <p>
-  This repository includes all the source code and what ever we used in the tutorial, and will be here as a refrence for students to keep looking for     
+  This repository includes all the source code, and will be here as a refrence for     
   further projects.
 </p>
 <h1 id="curriculm">
   Curriculum
 </h1>
 <p>
-  below you can find all the subjects that we talked about in this tutorial:
+  below you can find all the subjects:
 </p>
 <p>
   Introduction of the course
