@@ -181,7 +181,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # use custom user model instead of django user model
 AUTH_USER_MODEL = "accounts.User"
 
+# setting the permissions policy
+# rest_framework settings
 REST_FRAMEWORK = {
+    # if we want to use permissions globally settings we set permissions here
+    # no login is required to use api => AllowAny
+    # login is required to use api => IsAuthenticated
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],

@@ -24,7 +24,8 @@ from .paginations import DefaultPagination, CustomPagination
 """
 # this decorator adds rest_framework structure to the function base view
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
+# permission decorator most be come after api_view
+@permission_classes([IsAuthenticatedOrReadOnly, IsAuthenticated])
 def postList(request):
     if request.method == 'GET':
         posts = Post.objects.filter(status=True)
@@ -34,8 +35,11 @@ def postList(request):
         # serializer looks like context in the rendering page transforms data from model to json or xml like dictionary-style and returns to page with a response
         # serializer and ModelSerializer similar to Django Forms and ModelForm, sometimes time no need for the model and sometimes we can use some fields of models to get data from users
         return Response(serializer.data)
+    # send data from user and save on database
     elif request.method == 'POST':
+        # request.data is data come from user for fill up the forms
         serializer = PostSerializer(data=request.data)
+        # check validation serializers
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -50,11 +54,14 @@ def postDetail(request,id):
         # transform item in input (post) to json with serializer
         serializer = PostSerializer(post)
         return Response(serializer.data)
+    # update existing post
     elif request.method == 'PUT':
+        # we use this code (data=request.data) to get the last data are save it on the database to update them
         serializer = PostSerializer(post,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    # delete existing post
     elif request.method == 'DELETE':
         post.delete()
         return Response({"detail":"Item removed successfully"},status=status.HTTP_204_NO_CONTENT)

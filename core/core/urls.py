@@ -49,6 +49,7 @@ urlpatterns = [
 # drf-yasg urls,
 if settings.SHOW_SWAGGER:
     urlpatterns += [
+        # add login and logout for testing permission in api and not use for production mode
         path("api-auth/", include("rest_framework.urls")),
         path(
             "swagger/output.json",
