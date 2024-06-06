@@ -275,6 +275,8 @@ class PostViewSet(viewsets.ViewSet):
 
 
 # 5) Class Base View by ModelViewSet
+# this viewsets are generate all elements by models
+# included all mixins classes in GenericAPIView
 class PostModelViewSet(viewsets.ModelViewSet):
 
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

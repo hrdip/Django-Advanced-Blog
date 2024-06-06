@@ -190,6 +190,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+    # coreapi api_docs documentation
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_AUITHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
