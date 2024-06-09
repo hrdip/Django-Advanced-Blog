@@ -40,6 +40,7 @@ User = get_user_model()
 
 
 # registration user
+# use generics form customizing
 class RegistrationApiView(generics.GenericAPIView):
     serializer_class = RegistrationSerializer
 
@@ -47,15 +48,15 @@ class RegistrationApiView(generics.GenericAPIView):
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            # after serializer is valid, we get email data. in serializer we have password and email we need to show email after user registered, then we overwrite data
             email = serializer.validated_data["email"]
-            current_site = get_current_site(request).domain
-            realtivelink = reverse("activation")
             data = {"email": email}
+            current_site = get_current_site(self.request).domain
             user_obj = get_object_or_404(User, email=email)
             token = self.get_tokens_for_user(user_obj)
             email_obj = EmailMessage(
                 "email/activation_email.tpl",
-                {"token": token},
+                {"token": token, "current_site": current_site},
                 "admin@admin.com",
                 to=[email],
             )
@@ -124,7 +125,7 @@ class ChangePasswordApiView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Acctivated user login
+# Activated user login
 class TestEmailSend(generics.GenericAPIView):
     serializer_class = TestEmailSendSerializer
 

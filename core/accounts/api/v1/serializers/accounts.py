@@ -13,17 +13,22 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = ["email", "password", "password1"]
 
+    # data sent from the user is valid or not
     def validate(self, attrs):
+        # check password matching
         if attrs.get("password") != attrs.get("password1"):
-            raise serializers.ValidationError({"detail": "password dose not match"})
+            raise serializers.ValidationError({"detail": "password doesn't  match"})
+        # check password complexity
         try:
             validate_password(attrs.get("password"))
         except serializers.ValidationError as err:
             raise serializers.ValidationError({"password": list(err.messages)})
         return super().validate(attrs)
 
+    # save user data after validation
     def create(self, validated_data):
         validated_data.pop("password1", None)
+        # create a user with the given email and password with the create_user function written in the model
         return User.objects.create_user(**validated_data)
 
 

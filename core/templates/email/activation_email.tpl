@@ -5,6 +5,6 @@ Account Activation
 {% endblock %}
 
 {% block html %}
-http://{{current_site}}/{{realtivelink}}/{{token}}
+"http://{{ current_site }}{% url 'accounts:activation' token=token %}"
 
 {% endblock %}

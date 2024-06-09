@@ -219,11 +219,13 @@ SIMPLE_JWT = {
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_USE_TLS = False
-    EMAIL_HOST = "smtp4dev"
-    EMAIL_HOST_USER = ""
-    EMAIL_HOST_PASSWORD = ""
-    EMAIL_PORT = 25
+    EMAIL_HOST = config("EMAIL_HOST",default="smtp4dev")
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool ,default=False)
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool ,default=False)
+    # base on docker-compose
+    EMAIL_PORT = config("EMAIL_PORT", cast=int,default=25)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER",default="")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default="")
 else:
     EMAIL_BACKEND = config(
         "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
