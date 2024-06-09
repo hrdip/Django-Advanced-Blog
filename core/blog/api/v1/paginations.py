@@ -9,7 +9,7 @@ class DefaultPagination(PageNumberPagination):
 
 
 class CustomPagination(PageNumberPagination):
-    page_size = 6
+    page_size = 4
 
     def get_paginated_response(self, data):
         return Response(

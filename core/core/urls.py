@@ -23,7 +23,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
-# property for drf-yasg
+# schema_view for drf-yasg, swagger documentation
 schema_view = get_schema_view(
     openapi.Info(
         title="Blog API",
@@ -34,6 +34,7 @@ schema_view = get_schema_view(
         license=openapi.License(name="MIT License"),
     ),
     public=True,
+    # permission class 
     permission_classes=(permissions.AllowAny,),
 )
 
@@ -46,7 +47,7 @@ urlpatterns = [
     path("api-docs/", include_docs_urls(title="API Documentation")),
 ]
 
-# drf-yasg urls,
+# drf-yasg urls, swagger documentation urls
 if settings.SHOW_SWAGGER:
     urlpatterns += [
         # add login and logout for testing permission in api and not use for production mode

@@ -10,3 +10,10 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return obj.author.user == request.user
+    '''
+    def has_permission(self, request, view):
+        # Allow only staff users to create a post
+        if request.method == 'POST':
+            return request.user.is_staff
+        return True
+        '''

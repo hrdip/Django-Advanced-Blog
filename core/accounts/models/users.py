@@ -12,14 +12,14 @@ from django.utils.translation import ugettext_lazy as _
 # if we want make User class we need use Manager class(higher level)
 class UserManager(BaseUserManager):
 
-    """custom user model manager where email is the uniqu identifiers
+    """custom user model manager where email is the unique identifiers
     for authentication instead of username
     """
 
     def create_user(self, email, password, **extra_fields):
         """
         create and sava a user with the given
-        emial and password and extra data
+        email and password and extra data
         """
         if not email:
             raise ValueError(_("the email must be set"))
@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password, **extra_fields):
         """
         create and sava a superuser with the given
-        emial and password
+        email and password
         """
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_staff", True)

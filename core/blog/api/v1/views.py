@@ -282,12 +282,15 @@ class PostModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.filter(status=True)
+
+    # django-filters
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = {
         "category": ["exact", "in"],
         "author": ["exact", "in"],
         "status": ["exact"],
     }
+    # = mean exactly, __ used for relative models to get field, $ mean part of that field
     search_fields = ["title", "$content", "=category__name"]
     ordering_fields = ["published_date"]
     pagination_class = CustomPagination
