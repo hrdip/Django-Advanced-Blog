@@ -211,7 +211,7 @@ class PostDetail(GenericAPIView, mixins.RetrieveModelMixin, mixins.UpdateModelMi
     '''
 
 
-# Class Base View by ListCreateAPIView, the kind of GenericAPIView mixed with GenericAPIView plus mixins.ListModelMixin plus mixins.CreateModelMixin for the list or create a post. in the mother class already have get and post methods and no need to overwrite them again
+# Class Base View by ListCreateAPIView, the kind of GenericAPIView mixed with GenericAPIView plus mixins.ListModelMixin plus mixins.CreateModelMixin for the list or create a post. in the parent class already have get and post methods and no need to overwrite them again
 # ListAPIView and CreateAPIView class are exist and get list of post and create new post separately
 '''
 class PostList(ListCreateAPIView):
@@ -222,7 +222,7 @@ class PostList(ListCreateAPIView):
     queryset = Post.objects.filter(status=True)
     '''
 
-# Class Base View by RetrieveUpdateDestroyAPIView, the kind of GenericAPIView mixed with GenericAPIView plus mixins.RetrieveModelMixin plus mixins.UpdateModelMixin plus mixins.DestroyModelMixin for the retrieve or update or destroy a post. in the mother class already have get, put and delete methods and no need to overwrite them again
+# Class Base View by RetrieveUpdateDestroyAPIView, the kind of GenericAPIView mixed with GenericAPIView plus mixins.RetrieveModelMixin plus mixins.UpdateModelMixin plus mixins.DestroyModelMixin for the retrieve or update or destroy a post. in the parent class already have get, put and delete methods and no need to overwrite them again
 '''
 class PostDetail(RetrieveUpdateDestroyAPIView):
     """ get details of the post and edit plus remove it"""

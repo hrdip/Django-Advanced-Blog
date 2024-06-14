@@ -5,6 +5,6 @@ Account Activation
 {% endblock %}
 
 {% block html %}
-"http://{{ current_site }}{% url 'accounts:activation' token=token %}"
+<a class="form-label-link" href="http://{{ current_site }}{% url 'accounts:activation' token=token %}">activation link</a>
 
 {% endblock %}

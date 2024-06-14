@@ -7,4 +7,5 @@ Account Activation
 {% block html %}
 {{token}}
 
+
 {% endblock %}

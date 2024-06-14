@@ -40,7 +40,7 @@ class IndexView(TemplateView):
 
     # pass our argument with this function
     def get_context_data(self, **kwargs):
-        # first, go to the mother class and run get_context_data functions, with all arguments that have come with our reques
+        # first, go to the parent class and run get_context_data functions, with all arguments that have come with our reques
         context = super().get_context_data(**kwargs)
         # here we can add our arguments with the key-value dictionary
         context["name"] = "hossein"
