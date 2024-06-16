@@ -139,7 +139,7 @@ class ResetPasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError({"details": "user does not exist"})
         # when finding user, pass user in user_obj
         attrs["user"] = user_obj
-        return super().validate(attrs)
+        return attrs
 
 
 class ResetPasswordConfirmSerializer(serializers.Serializer):
@@ -155,4 +155,4 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
             validate_password(attrs.get("new_password"))
         except serializers.ValidationError as err:
             raise serializers.ValidationError({"new_password": list(err.messages)})
-        return super().validate(attrs)
+        return attrs

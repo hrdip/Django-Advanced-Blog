@@ -90,13 +90,7 @@ urlpatterns = [
 
     path(
         "reset-password/<str:token>/",
-        views.ResetPasswordCheckTokenApiView.as_view(),
+        views.ResetPasswordCheckTokenConfirmApiView.as_view(),
         name="reset-password-check-token",
-    ),
-
-    path(
-        "reset-password/complete/",
-        views.SetNewPasswordAPIView.as_view(),
-        name="reset-password-complete",
     ),
 ]
