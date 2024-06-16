@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 # if we want make User class we need use Manager class(higher level)
 class UserManager(BaseUserManager):
-
     """custom user model manager where email is the unique identifiers
     for authentication instead of username
     """

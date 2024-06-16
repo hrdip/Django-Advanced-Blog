@@ -100,7 +100,9 @@ class CustomDiscardAuthToken(APIView):
             token.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Token.DoesNotExist:
-            return Response({"detail": "Token not found."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Token not found."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 # jwt tokens are not saved on the database and have 3 parts; header, payload, and signature
@@ -287,11 +289,17 @@ class ResetPasswordCheckTokenConfirmApiView(generics.GenericAPIView):
             user_id = decoded_token.get("user_id")
         # check validation token
         except jwt.ExpiredSignatureError:
-            return Response({"details": "Token has expired"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"details": "Token has expired"}, status=status.HTTP_400_BAD_REQUEST
+            )
         except jwt.InvalidSignatureError:
-            return Response({"details": "Token is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"details": "Token is not valid"}, status=status.HTTP_400_BAD_REQUEST
+            )
         except jwt.DecodeError:
-            return Response({"details": "Token is invalid"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"details": "Token is invalid"}, status=status.HTTP_400_BAD_REQUEST
+            )
         # get user object with user_id are funded in decoded token
         user = get_object_or_404(User, pk=user_id)
 
@@ -299,7 +307,9 @@ class ResetPasswordCheckTokenConfirmApiView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         # Update user's password
-        user.set_password(serializer.validated_data['new_password'])
+        user.set_password(serializer.validated_data["new_password"])
         user.save()
 
-        return Response({"details": "Password reset successfully"}, status=status.HTTP_200_OK)
+        return Response(
+            {"details": "Password reset successfully"}, status=status.HTTP_200_OK
+        )

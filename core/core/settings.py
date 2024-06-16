@@ -184,7 +184,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         # rest_framework token authentication
         "rest_framework.authentication.TokenAuthentication",
-        # rest_framework jwt authentication 
+        # rest_framework jwt authentication
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
@@ -213,13 +213,13 @@ if DEBUG:
         "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
     )
     # smtp 4 dev container
-    EMAIL_HOST = config("EMAIL_HOST",default="smtp4dev")
-    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool ,default=False)
-    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool ,default=False)
+    EMAIL_HOST = config("EMAIL_HOST", default="smtp4dev")
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=False)
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
     # base on docker-compose
-    EMAIL_PORT = config("EMAIL_PORT", cast=int,default=25)
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER",default="")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default="")
+    EMAIL_PORT = config("EMAIL_PORT", cast=int, default=25)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 else:
     EMAIL_BACKEND = config(
         "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"

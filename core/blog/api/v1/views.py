@@ -235,7 +235,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 # 4) Class Base View by ViewSet
 # the 3rd generation of CBV, but function name are changed, get = list or retrieve, post = create, put = update, patch = partial_update and delete = destroy
-'''
+"""
 class PostViewSet(viewsets.ViewSet):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -271,7 +271,7 @@ class PostViewSet(viewsets.ViewSet):
         post_object = get_object_or_404(self.queryset, pk=pk)
         post_object.delete()
         return Response({"detail":"Item removed successfully"},status=status.HTTP_204_NO_CONTENT)
-    '''
+    """
 
 
 # 5) Class Base View by ModelViewSet

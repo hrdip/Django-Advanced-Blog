@@ -98,7 +98,9 @@ class PostSerializer(serializers.ModelSerializer):
         rep["category"] = CategorySerializer(
             instance.category, context={"request": request}
         ).data
-        rep["author"] = AuthorSerializer(instance.author, context={"request": request}).data
+        rep["author"] = AuthorSerializer(
+            instance.author, context={"request": request}
+        ).data
         return rep
 
     # the author is selected automatically based on user are authenticated
