@@ -26,7 +26,7 @@ class TestPostApi:
         response = api_client.get(url)
         assert response.status_code == 200
 
-    def test_create_post_response_403_status(self, api_client):
+    def test_create_post_response_401_status(self, api_client):
         url = reverse("blog:api-v1:post-list")
         data = {
             "title": "test",
@@ -35,7 +35,7 @@ class TestPostApi:
             "published_date": datetime.now(),
         }
         response = api_client.post(url, data)
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_create_post_response_201_status(self, api_client, common_user):
         url = reverse("blog:api-v1:post-list")
