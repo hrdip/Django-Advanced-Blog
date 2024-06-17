@@ -5,6 +5,7 @@ from datetime import datetime
 from accounts.models import User
 
 
+# pytest is a module for test
 @pytest.fixture
 def api_client():
     client = APIClient()
@@ -14,7 +15,9 @@ def api_client():
 @pytest.fixture
 def common_user():
     user = User.objects.create_user(
-        email="admin@example.com", password="a/@1234567", is_verified=True
+        email="admin@example.com",
+        password="a/@1234567",
+        is_verified=True
     )
     return user
 
@@ -54,7 +57,10 @@ class TestPostApi:
         self, api_client, common_user
     ):
         url = reverse("blog:api-v1:post-list")
-        data = {"title": "test", "published_date": datetime.now()}
+        data = {
+            "title": "test",
+            "published_date": datetime.now()
+        }
         user = common_user
         api_client.force_authenticate(user=user)
         response = api_client.post(url, data)

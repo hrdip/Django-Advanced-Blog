@@ -12,8 +12,9 @@ exclude =
     __init__.py,
 
 
-ignore = 
+ignore =
+    # line too long
     E501,
+    # import but not used
     F401,
     F811,
-    F841,
